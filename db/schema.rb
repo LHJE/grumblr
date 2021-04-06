@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_203217) do
+ActiveRecord::Schema.define(version: 2021_04_06_203702) do
+
+  create_table "posts", force: :cascade do |t|
+    t.text "content"
+    t.string "grass_tags"
+    t.string "only_followers"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
