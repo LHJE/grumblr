@@ -7,6 +7,7 @@ AllCops:
     - 'db/**/*'
     - 'lib/**/*'
     - 'log/**/*'
+    - 'node_modules/**/*'
     - 'public/**/*'
     - 'tmp/**/*'
     - 'spec/**/*'
