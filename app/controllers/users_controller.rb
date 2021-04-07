@@ -12,7 +12,12 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    if !current_user.nil?
+      flash[:notice] = 'You are already registerd.'
+      redirect_to root_path
+    else
+      @user = User.new
+    end
   end
 
   # GET /users/1/edit
