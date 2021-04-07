@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_214028) do
+ActiveRecord::Schema.define(version: 2021_04_07_191149) do
 
   create_table "follower_followeds", force: :cascade do |t|
     t.string "follower_id"
@@ -22,9 +22,9 @@ ActiveRecord::Schema.define(version: 2021_04_06_214028) do
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.string "grass_tags"
-    t.string "only_followers"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "only_followers"
   end
 
   create_table "user_posts", force: :cascade do |t|
