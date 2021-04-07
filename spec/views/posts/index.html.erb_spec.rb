@@ -5,11 +5,13 @@ RSpec.describe "posts/index", type: :view do
     assign(:posts, [
       Post.create!(
         content: "MyText",
-        grass_tags: "Grass Tags"
+        grass_tags: "Grass Tags",
+        only_followers: "Only Followers"
       ),
       Post.create!(
         content: "MyText",
-        grass_tags: "Grass Tags"
+        grass_tags: "Grass Tags",
+        only_followers: "Only Followers"
       )
     ])
   end
