@@ -5,20 +5,18 @@ RSpec.describe "users/new", type: :view do
     assign(:user, User.new(
       name: "MyString",
       email: "MyString",
-      password_digest: "MyString"
+      password: "MyString",
+      password_confirmation: "MyString"
     ))
   end
 
   it "renders new user form" do
     render
-
     assert_select "form[action=?][method=?]", users_path, "post" do
 
       assert_select "input[name=?]", "user[name]"
 
       assert_select "input[name=?]", "user[email]"
-
-      assert_select "input[name=?]", "user[password_digest]"
     end
   end
 end
