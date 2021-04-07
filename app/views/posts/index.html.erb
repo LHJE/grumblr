@@ -12,7 +12,10 @@
   </thead>
 
   <tbody>
-    <% @posts.each do |post| %>
+
+<!-- update to hide posts that are 1) only_followers && 2) the current_user is not following.  Also update so edit and destroy are only availalbe to the user whose post it is -->
+
+    <% @posts.reverse.each do |post| %>
       <tr>
         <td><%= post.content %></td>
         <td><%= post.grass_tags %></td>
