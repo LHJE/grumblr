@@ -4,7 +4,8 @@ RSpec.describe "posts/edit", type: :view do
   before(:each) do
     @post = assign(:post, Post.create!(
       content: "MyText",
-      grass_tags: "MyString"
+      grass_tags: "MyString",
+      only_followers: "MyString"
     ))
   end
 
