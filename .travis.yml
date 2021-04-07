@@ -4,8 +4,8 @@ rbenv:
 addons:
   postgresql: 9.6
 script:
-- rake webpacker:compile
 - bundle exec rails db:{create,migrate,seed} RAILS_ENV=test
+- rake webpacker:compile
 - bundle exec rspec
 deploy:
   provider: heroku
