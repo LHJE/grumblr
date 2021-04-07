@@ -1,5 +1,4 @@
 require 'rails_helper'
-include ActionView::Helpers::NumberHelper
 
 RSpec.describe 'Login & Logout' do
   describe 'As a user' do
