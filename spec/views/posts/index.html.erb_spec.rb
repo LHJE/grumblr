@@ -6,12 +6,12 @@ RSpec.describe "posts/index", type: :view do
       Post.create!(
         content: "MyText",
         grass_tags: "Grass Tags",
-        only_followers: "Only Followers"
+        only_followers: true
       ),
       Post.create!(
         content: "MyText",
         grass_tags: "Grass Tags",
-        only_followers: "Only Followers"
+        only_followers: true
       )
     ])
   end

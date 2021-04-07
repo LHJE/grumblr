@@ -5,7 +5,7 @@ RSpec.describe "posts/new", type: :view do
     assign(:post, Post.new(
       content: "MyText",
       grass_tags: "MyString",
-      only_followers: "MyString"
+      only_followers: true
     ))
   end
 
