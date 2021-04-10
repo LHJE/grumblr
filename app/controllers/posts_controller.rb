@@ -11,22 +11,25 @@ class PostsController < ApplicationController
 # Then we pluck all the `followed_id`'s out, since those are the id's of the users this current_user is following.
 # Then we find all the UserPost models that have those `followed_id`'s.
 # Then we pluck all the `post_id`'s out of the UserPosts that we now have.  These are the ids of posts that the user the current_user follows has posted (what a sentence!)
-# These ids are used to find Posts, but only posts with the matching id's that ALSO have `only_followers`set to true.
+# These ids are used to find Posts, but only posts with the matching id's that ALSO have `only_followers`set to true (although, I maybe don't need them to be the only the ones that are marked true come to think of it.  More testing is needed there).
 # Before ordering anything, we want to make sure that we still have all the public posts, so there's an `.or()` at the end getting all public ones.
 # Lastly, we order them in descending order so the newest ones come up first.
 
-        @posts = Post.where(id: UserPost.where(user_id: FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id)).pluck(:post_id), only_followers: true).or(Post.where(only_followers: false)).order(id: :desc)
+        @posts = Post.where(id: UserPost.where(user_id: FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id)).pluck(:post_id), only_followers: true).or(Post.where.not(only_followers: true).or(Post.where(only_followers: nil))).order(id: :desc)
       else
-        @posts = Post.where(only_followers: false).order(id: :desc)
+        @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
       end
     else
-      @posts = Post.where(only_followers: false).order(id: :desc)
+      @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
     end
-
+    @user_posts = UserPost.where(post_id: @posts.pluck(:id))
+    @users = User.where(id: @user_posts.pluck(:user_id))
   end
 
   # GET /posts/1 or /posts/1.json
-  def show; end
+  def show
+    @user = User.where(id: UserPost.where(post_id: @post.id).pluck(:user_id))
+  end
 
   # GET /posts/new
   def new
@@ -39,13 +42,24 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  def edit; end
+  def edit
+    require "pry"; binding.pry
+    if current_user.nil?
+      flash[:notice] = 'You need to be logged in to edit a grumbl.'
+      redirect_to root_path
+    else
+
+      flash[:notice] = 'You need to be the original grumblr edit a post.'
+      redirect_to root_path
+    end
+  end
 
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
     respond_to do |format|
       if @post.save
+        UserPost.create!(post_id: @post.id, user_id: current_user.id)
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
