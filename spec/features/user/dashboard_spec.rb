@@ -17,6 +17,7 @@ RSpec.describe 'Dashboard Page' do
       @user_1 = User.create(name: 'Jackie Chan', email: '67@67.com', password: '67', password_confirmation: '67')
       @user_2 = User.create!(name: 'Cynthia Rothrock', email: 'b@b.com', password: 'a', password_confirmation: 'a')
       @user_3 = User.create!(name: 'Michelle Yeoh', email: 'c@c.com', password: 'a', password_confirmation: 'a')
+      @user_4 = User.create!(name: 'Scott Adkins', email: 'd@d.com', password: 'a', password_confirmation: 'a')
       FollowerFollowed.create!(follower_id: @user_1.id, followed_id: @user_2.id)
       @post_1 = Post.create!(
         content: "This post",
@@ -39,8 +40,8 @@ RSpec.describe 'Dashboard Page' do
       )
       UserPost.create!(user_id: @user_1.id, post_id: @post_1.id)
       UserPost.create!(user_id: @user_1.id, post_id: @post_2.id)
-      UserPost.create!(user_id: @user_1.id, post_id: @post_3.id)
-      UserPost.create!(user_id: @user_2.id, post_id: @post_4.id)
+      UserPost.create!(user_id: @user_2.id, post_id: @post_3.id)
+      UserPost.create!(user_id: @user_3.id, post_id: @post_4.id)
     end
 
     it "I can see that I have Grumbls if I have Grumbls" do
@@ -52,7 +53,7 @@ RSpec.describe 'Dashboard Page' do
       click_button "Log In"
 
       visit user_dashboard_path
-save_and_open_page
+
       expect(page).to have_content("Welcome Jackie Chan!")
       expect(page).to have_content("Grumbls by Grumblrs you follow:")
       expect(page).to have_content(@post_1.content)
@@ -60,12 +61,12 @@ save_and_open_page
       expect(page).to have_content(@post_2.grass_tags)
       expect(page).to have_content(@post_3.content)
       expect(page).to have_content(@post_3.grass_tags)
-      expect(page).to have_content(@post_4.content)
-      expect(page).to have_content(@post_4.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
     end
 
     it "I can see that I don't have NPCs if I don't have NPCs" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_3)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_4)
 
       visit user_dashboard_path
 
