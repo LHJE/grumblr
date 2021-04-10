@@ -3,7 +3,11 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if current_user
+      require "pry"; binding.pry
+    else
+      @posts = Post.where.not(only_followers: true)
+    end
   end
 
   # GET /posts/1 or /posts/1.json
