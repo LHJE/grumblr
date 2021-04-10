@@ -4,6 +4,7 @@ RSpec.describe 'Post Index' do
   before :each do
     @user_1 = User.create!(name: 'Jackie Chan', email: 'a@a.com', password: 'a', password_confirmation: 'a')
     @user_2 = User.create!(name: 'Cynthia Rothrock', email: 'b@b.com', password: 'a', password_confirmation: 'a')
+    @user_3 = User.create!(name: 'Michelle Yeoh', email: 'c@c.com', password: 'a', password_confirmation: 'a')
     @post_1 = Post.create!(
       content: "This post",
       only_followers: false
@@ -18,9 +19,15 @@ RSpec.describe 'Post Index' do
       grass_tags: "hidden",
       only_followers: true
     )
+    @post_4 = Post.create!(
+      content: "The hidden other post",
+      grass_tags: "hidden, other",
+      only_followers: true
+    )
     UserPost.create!(user_id: @user_1.id, post_id: @post_1.id)
     UserPost.create!(user_id: @user_1.id, post_id: @post_2.id)
     UserPost.create!(user_id: @user_1.id, post_id: @post_3.id)
+    UserPost.create!(user_id: @user_3.id, post_id: @post_4.id)
   end
 
   describe 'As a Visitor' do
@@ -37,16 +44,34 @@ RSpec.describe 'Post Index' do
   end
 
   describe 'As a User' do
-    it "visit the website and see public posts, & not posts of users I don't follow" do
+    before :each do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_2)
+      FollowerFollowed.create!(follower_id: @user_2.id, followed_id: @user_1.id)
+
       visit root_path
-      
+    end
+
+    it "visit the website and see public posts, & not posts of users I don't follow" do
+      visit root_path
+
       expect(current_path).to eq(root_path)
       expect(page).to have_content(@post_1.content)
       expect(page).to have_content(@post_2.content)
       expect(page).to have_content(@post_2.grass_tags)
-      expect(page).to_not have_content(@post_3.content)
-      expect(page).to_not have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+    end
+
+    it "visit the website and see public posts, & posts of users I follow" do
+
+      expect(current_path).to eq(root_path)
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to have_content(@post_3.content)
+      expect(page).to have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
     end
   end
 end
