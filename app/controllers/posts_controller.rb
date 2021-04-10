@@ -30,7 +30,12 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    if current_user.nil?
+      flash[:notice] = 'You need to be logged in to post.'
+      redirect_to root_path
+    else
+      @post = Post.new
+    end
   end
 
   # GET /posts/1/edit
