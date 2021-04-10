@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "posts/new", type: :view do
   before(:each) do
+    @user = User.create(name: 'Jackie Chan', email: 'a@a.com', password: 'a', password_confirmation: 'a')
     assign(:post, Post.new(
       content: "MyText",
       grass_tags: "MyString",
-      only_followers: true
+      only_followers: true,
+      user_id: @user.id
     ))
   end
 
