@@ -1,4 +1,4 @@
-class UserPost < ApplicationRecord
+class UserLiked < ApplicationRecord
   validates :user_id,
             :post_id, presence: true
 
