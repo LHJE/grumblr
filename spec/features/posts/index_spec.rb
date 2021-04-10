@@ -51,18 +51,7 @@ RSpec.describe 'Post Index' do
       visit root_path
     end
 
-    it "visit the website and see public posts, & not posts of users I don't follow" do
-      visit root_path
-
-      expect(current_path).to eq(root_path)
-      expect(page).to have_content(@post_1.content)
-      expect(page).to have_content(@post_2.content)
-      expect(page).to have_content(@post_2.grass_tags)
-      expect(page).to_not have_content(@post_4.content)
-      expect(page).to_not have_content(@post_4.grass_tags)
-    end
-
-    it "visit the website and see public posts, & posts of users I follow" do
+    it "visit the website and see public posts, no posts by users I don't follow, & posts of users I follow" do
 
       expect(current_path).to eq(root_path)
       expect(page).to have_content(@post_1.content)
