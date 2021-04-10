@@ -14,12 +14,12 @@
   <tbody>
 
 <!-- update to hide posts that are 1) only_followers && 2) the current_user is not following.  Also update so edit and destroy are only availalbe to the user whose post it is -->
-
-    <% @posts.reverse.each do |post| %>
+    <% @posts.each do |post| %>
       <tr>
         <td><%= post.content %></td>
         <td><%= post.grass_tags %></td>
         <td><%= link_to 'Show', post %></td>
+
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
