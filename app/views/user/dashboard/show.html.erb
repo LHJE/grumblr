@@ -1,0 +1,25 @@
+<h1>Welcome <%= current_user.name %>!</h1>
+
+<p>Delete my account:</p>
+
+<%= form_tag "/users/destroy", method: :delete do %>
+  <%= submit_tag "Delete", class: :button %>
+<% end %>
+
+<h2>Grumbls by Grumblrs you follow:</h2>
+<section class='grumbls'>
+  <% if @posts.nil? || @posts == [] %>
+    <p>You've never grumbld, and either you aren't following anyone or they've never grumbld.</p>
+  <% else %>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.content %></td>
+        <td><%= post.grass_tags %></td>
+        <td><%= link_to 'Show', post %></td>
+
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</section>
