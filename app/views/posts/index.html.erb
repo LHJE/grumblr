@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Grumblr</th>
       <th>Content</th>
       <th>Grass tags</th>
       <th colspan="3"></th>
@@ -15,14 +16,18 @@
 
 <!-- update so edit and destroy are only availalbe to the user whose post it is -->
     <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.content %></td>
-        <td><%= post.grass_tags %></td>
-        <td><%= link_to 'Show', post %></td>
-
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="post-<%= post.id %>" >
+        <tr>
+          <td><%= link_to @users.where(id: post.user_id)[0].name, "users/#{@users.where(id: post.user_id)[0].id}" %>:</td>
+          <td><%= post.content %></td>
+          <td><%= post.grass_tags %></td>
+          <td><%= link_to 'Show', post %></td>
+          <% if current_user && @users.where(id: post.user_id)[0].id == current_user.id %>
+            <td><%= link_to 'Edit', edit_post_path(post) %></td>
+            <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      </div>
     <% end %>
   </tbody>
 </table>
