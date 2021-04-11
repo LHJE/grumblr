@@ -1,0 +1,16 @@
+<h1>Welcome <%= current_user.name %>!</h1>
+
+<p>Delete my account:</p>
+
+<%= form_tag "/users/destroy", method: :delete do %>
+  <%= submit_tag "Delete", class: :button %>
+<% end %>
+
+<h2>Grumbls by Grumblrs you follow:</h2>
+<section class='grumbls'>
+  <% if @posts.nil? || @posts == [] %>
+    <p>You've never grumbld, and either you aren't following anyone or they've never grumbld.</p>
+  <% else %>
+    <%= render "shared/post_rendering" %>
+  <% end %>
+</section>

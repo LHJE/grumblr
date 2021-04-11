@@ -42,6 +42,8 @@ RSpec.describe "/posts", type: :request do
 
   describe "GET /new" do
     it "renders a successful response" do
+      @user = User.create(name: 'Jackie Chan', email: 'a@a.com', password: 'a', password_confirmation: 'a')
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       get new_post_url
       expect(response).to be_successful
     end
