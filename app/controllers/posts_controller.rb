@@ -17,15 +17,13 @@ class PostsController < ApplicationController
                             FollowerFollowed.where(follower_id:
                                current_user.id).pluck(:followed_id),
                             only_followers: true).or(
-                              Post.where.not(only_followers: true).or(
-                                Post.where(only_followers: nil)
-                              )
+                              Post.where(only_followers: false)
                             ).order(id: :desc)
       else
-        @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
+        @posts = Post.where(only_followers: false).order(id: :desc)
       end
     else
-      @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
+      @posts = Post.where(only_followers: false).order(id: :desc)
     end
     @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
   end
