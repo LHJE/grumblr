@@ -60,7 +60,11 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params.merge(user_id: current_user.id))
+    if post_params[:only_followers].nil?
+      @post = Post.new(post_params.merge(user_id: current_user.id, only_followers: false))
+    else
+      @post = Post.new(post_params.merge(user_id: current_user.id))
+    end
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
