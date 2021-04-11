@@ -53,5 +53,49 @@ RSpec.describe 'UserLiked' do
     end
   end
 
-  
+  describe 'As a User' do
+    before :each do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
+    end
+
+    it "I can like a grumbl from the index" do
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to_not have_content(@post_3.content)
+      expect(page).to_not have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+
+      within(".post-#{@post_1.id}") do
+        click_link("Like")
+      end
+
+      expect(page).to have_content("You have liked the grumbl!")
+
+      within(".post-#{@post_1.id}") do
+        expect(page).to have_content("1 Likes")
+      end
+    end
+
+    it "I can unlike a grumbl from the index" do
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to_not have_content(@post_3.content)
+      expect(page).to_not have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+
+      within(".post-#{@post_2.id}") do
+        click_link("Unlike")
+      end
+
+      expect(page).to have_content("You have unliked the grumbl!")
+
+      within(".post-#{@post_2.id}") do
+        expect(page).to have_content("0 Likes")
+      end
+    end
+  end
 end
