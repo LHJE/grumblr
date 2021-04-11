@@ -52,6 +52,15 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq(root_path)
       end
 
+      it 'the profile page' do
+        visit user_dashboard_path
+
+        within 'nav' do
+          click_link 'Profile'
+        end
+
+        expect(current_path).to eq('/users/1')
+      end
 
       it 'the logout page' do
         visit root_path
