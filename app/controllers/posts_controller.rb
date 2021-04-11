@@ -26,11 +26,13 @@ class PostsController < ApplicationController
       @posts = Post.where(only_followers: false).order(id: :desc)
     end
     @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
+    @likes = UserLike.where(post_id: @posts.pluck(:id)) if @posts != []
   end
 
   # GET /posts/1 or /posts/1.json
   def show
     @user = User.where(id: @post.user_id)[0]
+    @likes = UserLike.where(post_id: @post.id)
   end
 
   # GET /posts/new
