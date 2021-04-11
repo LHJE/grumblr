@@ -13,16 +13,21 @@ class PostsController < ApplicationController
         # Before ordering anything, we want to make sure that we still have all the public posts, so there's an `.or()` at the end getting all public ones.
         # Lastly, we order them in descending order so the newest ones come up first.
 
-        @posts = Post.where(user_id: FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id), only_followers: true).or(Post.where.not(only_followers: true).or(Post.where(only_followers: nil))).order(id: :desc)
+        @posts = Post.where(user_id:
+                            FollowerFollowed.where(follower_id:
+                               current_user.id).pluck(:followed_id),
+                            only_followers: true).or(
+                              Post.where.not(only_followers: true).or(
+                                Post.where(only_followers: nil)
+                              )
+                            ).order(id: :desc)
       else
         @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
       end
     else
       @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
     end
-    if @posts != []
-      @users = User.where(id: @posts.pluck(:user_id))
-    end
+    @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
   end
 
   # GET /posts/1 or /posts/1.json
@@ -42,7 +47,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    require "pry"; binding.pry
+    require 'pry'; binding.pry
     if current_user.nil?
       flash[:notice] = 'You need to be logged in to edit a grumbl.'
       redirect_to root_path
@@ -55,7 +60,7 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params.merge(:user_id => current_user.id))
+    @post = Post.new(post_params.merge(user_id: current_user.id))
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
