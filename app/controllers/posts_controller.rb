@@ -12,11 +12,9 @@ class PostsController < ApplicationController
         # These ids are used to find Posts, but only posts with the matching followed_id's that ALSO have `only_followers`set to true (although, I maybe don't need them to be the only the ones that are marked true come to think of it.  More testing is needed there).
         # Before ordering anything, we want to make sure that we still have all the public posts, so there's an `.or()` at the end getting all public ones.
         # Lastly, we order them in descending order so the newest ones come up first.
-
         @posts = Post.where(user_id:
                             FollowerFollowed.where(follower_id:
-                               current_user.id).pluck(:followed_id),
-                            only_followers: true).or(
+                               current_user.id).pluck(:followed_id)).or(
                               Post.where(only_followers: false)
                             ).order(id: :desc)
       else
