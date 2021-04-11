@@ -8,8 +8,7 @@ class FollowerFollowedController < ApplicationController
   end
 
   def destroy
-    require "pry"; binding.pry
-    FollowerFollowed.where(follower_id: current_user.id, followed_id: params[:id]).destroy
+    FollowerFollowed.where(follower_id: current_user.id, followed_id: params[:id])[0].destroy
     flash[:notice] = "You have unfollowed #{User.where(id: params[:id])[0].name}!"
     redirect_to user_dashboard_path
   end
