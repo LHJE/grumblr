@@ -43,6 +43,7 @@ RSpec.describe 'FollowerFollowed' do
       click_link("Follow")
 
       expect(page).to have_content("This Page Only Accessible by Authenticated Users. Please Log In.")
+      expect(current_path).to eq(login_path)
     end
   end
 
@@ -75,6 +76,46 @@ RSpec.describe 'FollowerFollowed' do
       expect(page).to have_content(@post_2.grass_tags)
       expect(page).to have_content(@post_3.content)
       expect(page).to have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+    end
+
+    it "I can unfollow a followed user" do
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to_not have_content(@post_3.content)
+      expect(page).to_not have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+
+      FollowerFollowed.create!(follower_id: @user_2.id, followed_id: @user_1.id)
+
+      visit root_path
+
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to have_content(@post_3.content)
+      expect(page).to have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+
+      within(".post-#{@post_1.id}") do
+        click_link("Jackie Chan")
+      end
+
+      click_link("Unfollow")
+
+      expect(page).to have_content("You have unfollowed #{@user_1.name}!")
+
+      visit root_path
+
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to_not have_content(@post_3.content)
+      expect(page).to_not have_content(@post_3.grass_tags)
       expect(page).to_not have_content(@post_4.content)
       expect(page).to_not have_content(@post_4.grass_tags)
     end
