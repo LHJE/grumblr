@@ -27,7 +27,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @user = User.where(id: @post.pluck(:user_id))
+    @user = User.where(id: @post.user_id)[0]
   end
 
   # GET /posts/new
