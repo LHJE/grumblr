@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_191149) do
+ActiveRecord::Schema.define(version: 2021_04_10_200929) do
 
   create_table "follower_followeds", force: :cascade do |t|
     t.string "follower_id"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_191149) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "only_followers"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "user_posts", force: :cascade do |t|
@@ -42,4 +44,5 @@ ActiveRecord::Schema.define(version: 2021_04_07_191149) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "posts", "users"
 end
