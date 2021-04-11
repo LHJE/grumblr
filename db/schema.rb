@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_200929) do
+ActiveRecord::Schema.define(version: 2021_04_11_004135) do
 
   create_table "follower_followeds", force: :cascade do |t|
     t.string "follower_id"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_200929) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "user_posts", force: :cascade do |t|
+  create_table "user_likes", force: :cascade do |t|
     t.string "user_id"
     t.string "post_id"
     t.datetime "created_at", precision: 6, null: false
