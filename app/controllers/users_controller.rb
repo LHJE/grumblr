@@ -7,7 +7,19 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @posts = if current_user && current_user.id == @user.id || current_user && FollowerFollowed.where(
+      follower_id: current_user.id, followed_id: @user.id
+    ) != []
+               Post.where(user_id: @user.id)
+             else
+               Post.where(user_id: @user.id,
+                          only_followers: nil,
+                          only_followers: false)
+             end
+
+    @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
+  end
 
   # GET /users/new
   def new
