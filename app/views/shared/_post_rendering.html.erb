@@ -4,7 +4,9 @@
       <th>Grumblr</th>
       <th>Content</th>
       <th>Grass tags</th>
-      <th colspan="3"></th>
+      <th>Likes</th>
+      <th>View This Grumbl</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
@@ -15,10 +17,17 @@
           <td><%= link_to @users.where(id: post.user_id)[0].name, @users.where(id: post.user_id)[0] %>:</td>
           <td><%= post.content %></td>
           <td><%= post.grass_tags %></td>
+          <td><%= @likes.where(post_id: post.id).count %> Likes</td>
           <td><%= link_to 'Show', post %></td>
           <% if current_user && @users.where(id: post.user_id)[0].id == current_user.id %>
             <td><%= link_to 'Edit', edit_post_path(post) %></td>
             <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% else %>
+            <% if current_user && post.id.to_s == UserLike.where(user_id: current_user.id).pluck(:post_id)[0] %>
+              <td><%= link_to 'Unlike', "/user_likes/#{post.id}/destroy" %></td>
+            <% else %>
+              <td><%= link_to 'Like', "/user_likes/#{post.id}/create" %></td>
+            <% end %>
           <% end %>
         </tr>
       </div>
