@@ -19,6 +19,7 @@ class UsersController < ApplicationController
              end
 
     @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
+    @likes = UserLike.where(post_id: @posts.pluck(:id)) if @posts != []
   end
 
   # GET /users/new
