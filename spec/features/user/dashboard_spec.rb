@@ -1,5 +1,4 @@
 require 'rails_helper'
-include ActionView::Helpers::NumberHelper
 
 RSpec.describe 'Dashboard Page' do
   describe 'As a visitor' do

@@ -1,5 +1,4 @@
 require 'rails_helper'
-include ActionView::Helpers::NumberHelper
 
 RSpec.describe 'Profile Page' do
   describe 'As an authenticated  user' do
@@ -38,7 +37,6 @@ RSpec.describe 'Profile Page' do
 
       visit "users/#{@user_1.id}"
 
-      expect(page).to have_content("Jackie Chan")
       expect(page).to have_content("Jackie Chan's Grumbls:")
       expect(page).to have_content(@post_1.content)
       expect(page).to_not have_content(@post_2.content)
@@ -53,7 +51,6 @@ RSpec.describe 'Profile Page' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
       visit "users/#{@user_1.id}"
 
-      expect(page).to have_content("Jackie Chan")
       expect(page).to have_content("Jackie Chan's Grumbls:")
       expect(page).to have_content(@post_1.content)
       expect(page).to have_content(@post_2.content)
@@ -63,6 +60,5 @@ RSpec.describe 'Profile Page' do
       expect(page).to_not have_content(@post_4.content)
       expect(page).to_not have_content(@post_4.grass_tags)
     end
-
   end
 end
