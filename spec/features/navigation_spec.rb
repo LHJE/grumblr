@@ -77,7 +77,7 @@ RSpec.describe 'Site Navigation' do
           click_link 'Profile'
         end
 
-        expect(current_path).to eq('/users/1')
+        expect(current_path).to eq('/users/11')
       end
 
       it 'the dashboard page' do
