@@ -8,10 +8,9 @@ RSpec.describe 'User show', type: :feature do
         @post = Post.create(
           content: "MyText",
           grass_tags: "Grass Tags",
-          only_followers: true
+          only_followers: true,
+          user_id: @user.id
         )
-
-        UserPost.create(user_id: @user.id, post_id: @post.id)
       end
 
       it "visits user page" do
