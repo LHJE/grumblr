@@ -10,28 +10,27 @@ RSpec.describe 'User Destruction' do
         FollowerFollowed.create!(follower_id: @user_1.id, followed_id: @user_2.id)
         @post_1 = Post.create!(
           content: "This post",
-          only_followers: false
+          only_followers: false,
+          user_id: @user_1.id
         )
         @post_2 = Post.create!(
           content: "The other post",
           grass_tags: "other",
-          only_followers: false
+          only_followers: false,
+          user_id: @user_1.id
         )
         @post_3 = Post.create!(
           content: "The hidden post",
           grass_tags: "hidden",
-          only_followers: true
+          only_followers: true,
+          user_id: @user_1.id
         )
         @post_4 = Post.create!(
           content: "The hidden other post",
           grass_tags: "hidden, other",
-          only_followers: true
+          only_followers: true,
+          user_id: @user_2.id
         )
-        UserPost.create!(user_id: @user_1.id, post_id: @post_1.id)
-        UserPost.create!(user_id: @user_1.id, post_id: @post_2.id)
-        UserPost.create!(user_id: @user_1.id, post_id: @post_3.id)
-        UserPost.create!(user_id: @user_2.id, post_id: @post_4.id)
-
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
         visit user_dashboard_path
       end
