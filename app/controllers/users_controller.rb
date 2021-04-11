@@ -14,7 +14,6 @@ class UsersController < ApplicationController
                Post.where(user_id: @user.id)
              else
                Post.where(user_id: @user.id,
-                          only_followers: nil,
                           only_followers: false)
              end
 
