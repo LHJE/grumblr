@@ -5,5 +5,6 @@ class User::DashboardController < ApplicationController
 
     @posts = Post.where(user_id: FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id)).or(Post.where(user_id: current_user.id)).order(id: :desc)
     @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
+    @likes = UserLike.where(post_id: @posts.pluck(:id)) if @posts != []
   end
 end
