@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+FollowerFollowed.destroy_all
+UserLike.destroy_all
+Post.destroy_all
+User.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('follower_followeds')
+ActiveRecord::Base.connection.reset_pk_sequence!('user_likes')
+ActiveRecord::Base.connection.reset_pk_sequence!('posts')
+ActiveRecord::Base.connection.reset_pk_sequence!('users')
