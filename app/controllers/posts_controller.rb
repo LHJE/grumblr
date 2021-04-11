@@ -5,13 +5,13 @@ class PostsController < ApplicationController
   def index
     if current_user
       if !Post.where(only_followers: true)[0].nil? && !FollowerFollowed.where(follower_id: current_user.id)[0].nil?
-# This one is a doosie.  It sorta starts in the middle and spirals out.  What we're trying to find here is all the public non-"Only Followers" posts as well as the posts that this user can see because they follow a user who has "Only Followers" posts.
+        # This one is a doosie.  It sorta starts in the middle and spirals out.  What we're trying to find here is all the public non-"Only Followers" posts as well as the posts that this user can see because they follow a user who has "Only Followers" posts.
 
-# So first we find the FollowerFollowed models that have the current_user's id in the follower_id column.
-# Then we pluck all the `followed_id`'s out, since those are the id's of the users this current_user is following.
-# These ids are used to find Posts, but only posts with the matching followed_id's that ALSO have `only_followers`set to true (although, I maybe don't need them to be the only the ones that are marked true come to think of it.  More testing is needed there).
-# Before ordering anything, we want to make sure that we still have all the public posts, so there's an `.or()` at the end getting all public ones.
-# Lastly, we order them in descending order so the newest ones come up first.
+        # So first we find the FollowerFollowed models that have the current_user's id in the follower_id column.
+        # Then we pluck all the `followed_id`'s out, since those are the id's of the users this current_user is following.
+        # These ids are used to find Posts, but only posts with the matching followed_id's that ALSO have `only_followers`set to true (although, I maybe don't need them to be the only the ones that are marked true come to think of it.  More testing is needed there).
+        # Before ordering anything, we want to make sure that we still have all the public posts, so there's an `.or()` at the end getting all public ones.
+        # Lastly, we order them in descending order so the newest ones come up first.
 
         @posts = Post.where(user_id: FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id), only_followers: true).or(Post.where.not(only_followers: true).or(Post.where(only_followers: nil))).order(id: :desc)
       else
