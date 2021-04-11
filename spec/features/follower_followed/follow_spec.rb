@@ -38,12 +38,11 @@ RSpec.describe 'FollowerFollowed' do
       within(".post-#{@post_1.id}") do
         click_link("Jackie Chan")
       end
-
       expect(current_path).to eq(user_path(@user_1))
 
-      click_button("Follow")
+      click_link("Follow")
 
-      expect(page).to have_content("You have to log in to follow #{@user_1.name}!")
+      expect(page).to have_content("This Page Only Accessible by Authenticated Users. Please Log In.")
     end
   end
 
@@ -65,7 +64,7 @@ RSpec.describe 'FollowerFollowed' do
         click_link("Jackie Chan")
       end
 
-      click_button("Follow")
+      click_link("Follow")
 
       expect(page).to have_content("You have followed #{@user_1.name}!")
 
