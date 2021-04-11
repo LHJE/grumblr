@@ -49,5 +49,20 @@ RSpec.describe 'Profile Page' do
       expect(page).to_not have_content(@post_4.grass_tags)
     end
 
+    it "If logged in, I can see my Grumbls if I have Grumbls" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
+      visit "users/#{@user_1.id}"
+
+      expect(page).to have_content("Jackie Chan")
+      expect(page).to have_content("Jackie Chan's Grumbls:")
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to_not have_content(@post_3.content)
+      expect(page).to_not have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+    end
+
   end
 end
