@@ -32,6 +32,24 @@ RSpec.describe 'Site Navigation' do
 
         expect(current_path).to eq(registration_path)
       end
+
+      it 'the logout link' do
+        visit root_path
+
+        expect(page).to_not have_link('Log Out')
+      end
+
+      it 'the Profile link' do
+        visit root_path
+
+        expect(page).to_not have_link('Profile')
+      end
+
+      it 'the Dashboard link' do
+        visit root_path
+
+        expect(page).to_not have_link('Dashboard')
+      end
     end
   end
 
