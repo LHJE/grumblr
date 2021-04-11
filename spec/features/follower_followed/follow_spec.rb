@@ -35,9 +35,14 @@ RSpec.describe 'FollowerFollowed' do
   describe 'As a Visitor' do
     it "I cannot follow a user" do
 
-      click_link("Jackie Chan")
+      within(".post-#{@post_1.id}") do
+        click_link("Jackie Chan")
+      end
+
       expect(current_path).to eq(user_path(@user_1))
+
       click_button("Follow")
+
       expect(page).to have_content("You have to log in to follow #{@user_1.name}!")
     end
   end
@@ -56,7 +61,10 @@ RSpec.describe 'FollowerFollowed' do
       expect(page).to_not have_content(@post_4.content)
       expect(page).to_not have_content(@post_4.grass_tags)
 
-      click_link("Jackie Chan")
+      within(".post-#{@post_1.id}") do
+        click_link("Jackie Chan")
+      end
+
       click_button("Follow")
 
       expect(page).to have_content("You have followed #{@user_1.name}!")
