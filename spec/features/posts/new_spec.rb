@@ -28,5 +28,18 @@ RSpec.describe 'Post New' do
 
       expect(current_path).to eq(new_post_path)
     end
+
+    it "I can make a new post"  do
+      click_button "New Post"
+
+      fill_in 'post[content]', with: 'It is a #new post!'
+      fill_in 'post[grass_tags]', with: 'new'
+
+      click_button "Create Post"
+
+      expect(current_path).to eq('/posts/1')
+      expect(page).to have_content('It is a #new post!')
+      expect(page).to have_content("new")
+    end
   end
 end
