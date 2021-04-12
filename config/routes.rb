@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'posts#index'
   resources :posts
+  post '/posts/new', to: 'posts#new'
+
   resources :users
   post '/users/:id/edit', to: 'users#edit'
 
