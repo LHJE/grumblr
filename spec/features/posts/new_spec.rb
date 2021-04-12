@@ -37,9 +37,21 @@ RSpec.describe 'Post New' do
 
       click_button "Create Post"
 
-      expect(current_path).to eq('/posts/1')
+      expect(current_path).to eq("/posts/#{Post.all[-1].id}")
       expect(page).to have_content('It is a #new post!')
       expect(page).to have_content("new")
+    end
+
+    it "I cannot make a new post without content"  do
+      click_button "New Post"
+
+      fill_in 'post[grass_tags]', with: 'new'
+
+      click_button "Create Post"
+
+      expect(current_path).to eq('/posts')
+      expect(page).to have_content('1 error prohibited this post from being saved:')
+      expect(page).to have_content("Content can't be blank")
     end
   end
 end
