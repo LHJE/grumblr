@@ -49,7 +49,7 @@ class PostsController < ApplicationController
       flash[:notice] = 'You need to be logged in to edit a grumbl.'
       redirect_to root_path
     elsif current_user.id != @post.user_id
-      flash[:notice] = 'You need to be the original grumblr edit a grumbl.'
+      flash[:notice] = 'You need to be the original grumblr to edit a grumbl.'
       redirect_to root_path
     end
   end

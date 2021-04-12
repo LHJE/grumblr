@@ -37,7 +37,7 @@ RSpec.describe 'Post Edit' do
       visit edit_post_path(@post_2)
 
       expect(current_path).to eq(root_path)
-      expect(page).to have_content('You need to be the original grumblr edit a grumbl.')
+      expect(page).to have_content('You need to be the original grumblr to edit a grumbl.')
     end
 
     it "I can click the New Post button and be sent to new_post_path"  do
