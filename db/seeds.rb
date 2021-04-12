@@ -28,4 +28,3 @@ end
   UserLike.create!(user_id: rand(1..100).to_s, post_id: rand(1..100).to_s)
   FollowerFollowed.create!(follower_id: rand(1..100).to_s, followed_id: rand(1..100).to_s)
 end
-require "pry"; binding.pry
