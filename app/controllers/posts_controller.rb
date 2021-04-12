@@ -15,8 +15,8 @@ class PostsController < ApplicationController
         @posts = Post.where(user_id:
                             FollowerFollowed.where(follower_id:
                                current_user.id).pluck(:followed_id)).or(
-                              Post.where(only_followers: false)
-                            ).order(id: :desc)
+                                 Post.where(only_followers: false)
+                               ).order(id: :desc)
       else
         @posts = Post.where(only_followers: false).order(id: :desc)
       end
@@ -58,11 +58,11 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    if post_params[:only_followers].nil?
-      @post = Post.new(post_params.merge(user_id: current_user.id, only_followers: false))
-    else
-      @post = Post.new(post_params.merge(user_id: current_user.id))
-    end
+    @post = if post_params[:only_followers].nil?
+              Post.new(post_params.merge(user_id: current_user.id, only_followers: false))
+            else
+              Post.new(post_params.merge(user_id: current_user.id))
+            end
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
