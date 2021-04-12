@@ -37,5 +37,15 @@ RSpec.describe 'Post Destory' do
       expect(current_path).to eq(root_path)
       expect(page).to have_content('You need to be the original grumblr to destroy a grumbl.')
     end
+
+    it "I can destroy my post" do
+      visit root_path
+
+      click_link "Destroy"
+
+      expect(current_path).to eq('/posts')
+      expect(page).to have_content("Grumbl was successfully destroyed.")
+      expect(page).to_not have_content(@post_1.content)
+    end
   end
 end
