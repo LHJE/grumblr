@@ -32,6 +32,24 @@ RSpec.describe 'Site Navigation' do
 
         expect(current_path).to eq(registration_path)
       end
+
+      it 'the logout link' do
+        visit root_path
+
+        expect(page).to_not have_link('Log Out')
+      end
+
+      it 'the Profile link' do
+        visit root_path
+
+        expect(page).to_not have_link('Profile')
+      end
+
+      it 'the Dashboard link' do
+        visit root_path
+
+        expect(page).to_not have_link('Dashboard')
+      end
     end
   end
 
@@ -42,6 +60,35 @@ RSpec.describe 'Site Navigation' do
     end
 
     describe 'I see a nav bar where I can link to' do
+      it 'the welcome page' do
+        visit user_dashboard_path
+
+        within 'nav' do
+          click_link 'Home'
+        end
+
+        expect(current_path).to eq(root_path)
+      end
+
+      it 'the profile page' do
+        visit user_dashboard_path
+
+        within 'nav' do
+          click_link 'Profile'
+        end
+
+        expect(current_path).to eq('/users/11')
+      end
+
+      it 'the dashboard page' do
+        visit root_path
+
+        within 'nav' do
+          click_link 'Dashboard'
+        end
+
+        expect(current_path).to eq(user_dashboard_path)
+      end
 
       it 'the logout page' do
         visit root_path

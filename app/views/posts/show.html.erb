@@ -10,9 +10,23 @@
 </p>
 
 <p>
-  <strong>Grass tags:</strong>
+  <strong>Grass Tags:</strong>
   <%= @post.grass_tags %>
 </p>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<p>
+  <strong>Likes:</strong>
+  <%= @likes.where(post_id: @post.id).count %>
+</p>
+<% if current_user && current_user.id == @user.id %>
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Destroy', 'posts#destroy' %> |
+<% else %>
+  <% if current_user && @likes.where(user_id: current_user.id).pluck(:post_id).include?(@post.id.to_s) %>
+    <%= link_to 'Unlike', "/user_likes/#{@post.id}/destroy" %>
+  <% else %>
+    <%= link_to 'Like', "/user_likes/#{@post.id}/create" %>
+  <% end %>
+<% end %>
+
 <%= link_to 'Back', posts_path %>

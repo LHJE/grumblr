@@ -12,5 +12,4 @@ class FollowerFollowedController < ApplicationController
     flash[:notice] = "You have unfollowed #{User.where(id: params[:id])[0].name}!"
     redirect_to user_dashboard_path
   end
-
 end

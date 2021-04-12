@@ -35,6 +35,10 @@ RSpec.describe 'Post Index' do
       visit root_path
 
       expect(current_path).to eq(root_path)
+      expect(page).to have_content("GRUMBLR")
+      expect(page).to have_content("Where All Your Minor Inconveniences Can Be Shared")
+      expect(page).to have_content("i'm sure nothing will go wrong with this site")
+      expect(page).to have_content("Here's What's Grumblin:")
       expect(page).to have_content(@post_1.content)
       expect(page).to have_content(@post_2.content)
       expect(page).to have_content(@post_2.grass_tags)

@@ -1,16 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Dashboard Page' do
-  describe 'As a visitor' do
-    describe "When I visit the dashboard page" do
-      it "I can see a message telling me to login to see this page" do
-        visit 'user/dashboard'
-        expect(page).to have_content("This Page Only Accessible by Authenticated Users. Please Log In.")
-        expect(current_path).to eq(login_path)
-      end
-    end
-  end
-
+RSpec.describe 'Profile Page' do
   describe 'As an authenticated  user' do
     before :each do
       @user_1 = User.create(name: 'Jackie Chan', email: '67@67.com', password: '67', password_confirmation: '67')
@@ -26,7 +16,7 @@ RSpec.describe 'Dashboard Page' do
       @post_2 = Post.create!(
         content: "The other post",
         grass_tags: "other",
-        only_followers: false,
+        only_followers: true,
         user_id: @user_1.id
       )
       @post_3 = Post.create!(
@@ -43,34 +33,12 @@ RSpec.describe 'Dashboard Page' do
       )
     end
 
-    it "I can see that I have Grumbls if I have Grumbls" do
-      visit login_path
+    it "If not logged in, I can see my Grumbls if I have Grumbls, but not the only_followers ones" do
 
-      fill_in 'Email', with: @user_1.email
-      fill_in 'Password', with: @user_1.password
+      visit "users/#{@user_1.id}"
 
-      click_button "Log In"
-
-      visit user_dashboard_path
-
-      expect(page).to have_content("Welcome Jackie Chan!")
-      expect(page).to have_content("Grumbls by Grumblrs you follow:")
+      expect(page).to have_content("Jackie Chan's Grumbls:")
       expect(page).to have_content(@post_1.content)
-      expect(page).to have_content(@post_2.content)
-      expect(page).to have_content(@post_2.grass_tags)
-      expect(page).to have_content(@post_3.content)
-      expect(page).to have_content(@post_3.grass_tags)
-      expect(page).to_not have_content(@post_4.content)
-      expect(page).to_not have_content(@post_4.grass_tags)
-    end
-
-    it "I can see that I don't have any grumbls in my grumbl feed" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_4)
-
-      visit user_dashboard_path
-
-      expect(page).to have_content("You've never grumbld, and either you aren't following anyone or they've never grumbld.")
-      expect(page).to_not have_content(@post_1.content)
       expect(page).to_not have_content(@post_2.content)
       expect(page).to_not have_content(@post_2.grass_tags)
       expect(page).to_not have_content(@post_3.content)
@@ -79,5 +47,18 @@ RSpec.describe 'Dashboard Page' do
       expect(page).to_not have_content(@post_4.grass_tags)
     end
 
+    it "If logged in, I can see my Grumbls if I have Grumbls" do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
+      visit "users/#{@user_1.id}"
+
+      expect(page).to have_content("Jackie Chan's Grumbls:")
+      expect(page).to have_content(@post_1.content)
+      expect(page).to have_content(@post_2.content)
+      expect(page).to have_content(@post_2.grass_tags)
+      expect(page).to_not have_content(@post_3.content)
+      expect(page).to_not have_content(@post_3.grass_tags)
+      expect(page).to_not have_content(@post_4.content)
+      expect(page).to_not have_content(@post_4.grass_tags)
+    end
   end
 end

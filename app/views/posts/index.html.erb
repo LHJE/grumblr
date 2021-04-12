@@ -1,9 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Posts</h1>
+<h1>GRUMBLR</h1>
+<h2>Where All Your Minor Inconveniences Can Be Shared</h2>
+<h3>i'm sure nothing will go wrong with this site</h3>
 
-  <%= render "shared/post_rendering" %>
-
+<%= button_to 'New Post', new_post_path %>
 <br>
 
-<%= link_to 'New Post', new_post_path %>
+<h2>Here's What's Grumblin:</h2>
+
+  <%= render "shared/post_rendering" %>

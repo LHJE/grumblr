@@ -7,7 +7,21 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @posts = if current_user && current_user.id == @user.id || current_user && FollowerFollowed.where(
+      follower_id: current_user.id, followed_id: @user.id
+    ) != []
+               Post.where(user_id: @user.id)
+             else
+               Post.where(user_id: @user.id,
+                          only_followers: false)
+             end
+
+    @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
+    @likes = UserLike.where(post_id: @posts.pluck(:id)) if @posts != []
+    @followers = User.where(id: FollowerFollowed.where(followed_id: @user.id).pluck(:follower_id))
+    @following = User.where(id: FollowerFollowed.where(follower_id: @user.id).pluck(:followed_id))
+  end
 
   # GET /users/new
   def new
@@ -60,6 +74,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    session.delete(:user_id)
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }

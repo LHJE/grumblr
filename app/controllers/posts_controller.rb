@@ -12,27 +12,25 @@ class PostsController < ApplicationController
         # These ids are used to find Posts, but only posts with the matching followed_id's that ALSO have `only_followers`set to true (although, I maybe don't need them to be the only the ones that are marked true come to think of it.  More testing is needed there).
         # Before ordering anything, we want to make sure that we still have all the public posts, so there's an `.or()` at the end getting all public ones.
         # Lastly, we order them in descending order so the newest ones come up first.
-
         @posts = Post.where(user_id:
                             FollowerFollowed.where(follower_id:
-                               current_user.id).pluck(:followed_id),
-                            only_followers: true).or(
-                              Post.where.not(only_followers: true).or(
-                                Post.where(only_followers: nil)
-                              )
-                            ).order(id: :desc)
+                               current_user.id).pluck(:followed_id)).or(
+                                 Post.where(only_followers: false)
+                               ).order(id: :desc)
       else
-        @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
+        @posts = Post.where(only_followers: false).order(id: :desc)
       end
     else
-      @posts = Post.where.not(only_followers: true).or(Post.where(only_followers: nil)).order(id: :desc)
+      @posts = Post.where(only_followers: false).order(id: :desc)
     end
     @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
+    @likes = UserLike.where(post_id: @posts.pluck(:id)) if @posts != []
   end
 
   # GET /posts/1 or /posts/1.json
   def show
     @user = User.where(id: @post.user_id)[0]
+    @likes = UserLike.where(post_id: @post.id)
   end
 
   # GET /posts/new
@@ -60,7 +58,11 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params.merge(user_id: current_user.id))
+    @post = if post_params[:only_followers].nil?
+              Post.new(post_params.merge(user_id: current_user.id, only_followers: false))
+            else
+              Post.new(post_params.merge(user_id: current_user.id))
+            end
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
