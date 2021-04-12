@@ -12,6 +12,9 @@ Added features for the future:
 - The addition of Admin features
 - ReGrumbling other grumblrs grumbls
 
+Additional Info:
+- This app was being checked by TravisCI right up until the very last commit, because that's when I happened to run out of my TravisCI free trial.  I've had my friend, and the designer of the logo for Grumblr, clone the repo, and run the last PR through on her cloned repo, and TravisCI says it passed.  You can check that out here: [https://travis-ci.com/github/cecile1981/grumblr/builds/222873663](https://travis-ci.com/github/cecile1981/grumblr/builds/222873663).  I'm currently looking at alternative CI options as we speak.
+
 ### Live app
 [https://grumblr-lhje.herokuapp.com/](https://grumblr-lhje.herokuapp.com/)
 
