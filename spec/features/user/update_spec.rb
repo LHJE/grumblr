@@ -58,6 +58,21 @@ RSpec.describe 'User Update' do
         expect(page).to have_content("Name: Jackie")
         expect(page).to have_content("Email: JackieChan@example.com")
       end
+
+      it "I cannot edit my account if password is wrong" do
+        click_button 'Edit'
+
+        fill_in 'user[name]', with: 'Jackie'
+        fill_in 'user[email]', with: 'JackieChan@example.com'
+        fill_in 'user[password]', with: 'securepassword'
+        fill_in 'user[password_confirmation]', with: 'NOT THE SAME'
+
+        click_button 'Update User'
+
+        expect(current_path).to eq("/users/#{@user_1.id}")
+        expect(page).to have_content("1 error prohibited this user from being saved:")
+        expect(page).to have_content("Password confirmation doesn't match Password")
+      end
     end
   end
 end
