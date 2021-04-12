@@ -42,6 +42,22 @@ RSpec.describe 'User Update' do
 
         expect(current_path).to eq(edit_user_path(@user_1))
       end
+
+      it "I can edit my account" do
+        click_button 'Edit'
+
+        fill_in 'user[name]', with: 'Jackie'
+        fill_in 'user[email]', with: 'JackieChan@example.com'
+        fill_in 'user[password]', with: 'securepassword'
+        fill_in 'user[password_confirmation]', with: 'securepassword'
+
+        click_button 'Update User'
+
+        expect(current_path).to eq("/users/#{@user_1.id}")
+        expect(page).to have_content("User was successfully updated.")
+        expect(page).to have_content("Name: Jackie")
+        expect(page).to have_content("Email: JackieChan@example.com")
+      end
     end
   end
 end
