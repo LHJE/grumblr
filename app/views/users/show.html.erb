@@ -9,16 +9,19 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
-<% if current_user && current_user.id == @user.id %>
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-  <%= link_to 'Destroy', 'users#destroy' %> |
-<% else %>
+
+
+<p>
+  <%= link_to 'Grumbls I Like', "/user/liked/#{@user.id}" %>
+</p>
+<% if current_user.nil? || current_user.id != @user.id %>
   <% if current_user && @user.id.to_s == FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id)[0] %>
     <%= link_to 'Unfollow', "/follower_followed/#{@user.id}/destroy" %>
   <% else %>
     <%= link_to 'Follow', "/follower_followed/#{@user.id}/create" %>
   <% end %>
 <% end %>
+
 <%= link_to 'Back', users_path %>
 
 <h3><%= @user.name %>'s Grumbls:</h3>
