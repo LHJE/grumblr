@@ -8,6 +8,7 @@ RSpec.describe 'User Show Page' do
       @user_3 = User.create!(name: 'Michelle Yeoh', email: 'c@c.com', password: 'a', password_confirmation: 'a')
       @user_4 = User.create!(name: 'Scott Adkins', email: 'd@d.com', password: 'a', password_confirmation: 'a')
       FollowerFollowed.create!(follower_id: @user_1.id, followed_id: @user_2.id)
+      FollowerFollowed.create!(follower_id: @user_3.id, followed_id: @user_1.id)
       @post_1 = Post.create!(
         content: "This post",
         only_followers: false,
@@ -58,6 +59,16 @@ RSpec.describe 'User Show Page' do
       expect(page).to have_content(@post_3.grass_tags)
       expect(page).to_not have_content(@post_4.content)
       expect(page).to_not have_content(@post_4.grass_tags)
+    end
+
+    it "I can see followers and followeds of this user" do
+
+      visit "users/#{@user_1.id}"
+
+      expect(page).to have_content("Followers:")
+      expect(page).to have_content(@user_3.name)
+      expect(page).to have_content("Following")
+      expect(page).to have_content(@user_2.name)
     end
 
   end
