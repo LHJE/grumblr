@@ -1,0 +1,10 @@
+<h1><%= @users[0].name %>'s Liked Grumbls'!</h1>
+
+<h2>Here're the grumbls:</h2>
+<section class='grumbls'>
+  <% if @posts.nil? || @posts == [] %>
+    <p> <%= @users[0].name %> has never liked a grumbl.</p>
+  <% else %>
+    <%= render "shared/post_rendering" %>
+  <% end %>
+</section>
