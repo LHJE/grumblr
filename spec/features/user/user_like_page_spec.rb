@@ -55,7 +55,7 @@ RSpec.describe 'User Like Page' do
 
       expect(page).to have_content("Grumbls That #{@user_1.name} Likes")
 
-      click_link "Grumbls #{@user_1.name} Likes"
+      click_link "Grumbls That #{@user_1.name} Likes"
 
       expect(current_path).to eq("/user/liked/#{@user_1.id}")
       expect(page).to_not have_content(@post_1.content)
