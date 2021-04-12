@@ -19,6 +19,8 @@ class UsersController < ApplicationController
 
     @users = User.where(id: @posts.pluck(:user_id)) if @posts != []
     @likes = UserLike.where(post_id: @posts.pluck(:id)) if @posts != []
+    @followers = User.where(id: FollowerFollowed.where(followed_id: @user.id).pluck(:follower_id))
+    @following = User.where(id: FollowerFollowed.where(follower_id: @user.id).pluck(:followed_id))
   end
 
   # GET /users/new
