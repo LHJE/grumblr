@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 
   namespace :user do
     get '/dashboard', to: 'dashboard#show'
+    get '/liked/:id', to: 'liked#show'
   end
 end
