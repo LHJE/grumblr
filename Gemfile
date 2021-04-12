@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'faraday'
 gem 'figaro', '~> 1.2.0'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -41,7 +42,7 @@ group :development, :test do
   gem 'travis'
   gem 'orderly'
   gem 'capybara'
-  gem 'faker'
+
 end
 
 group :development do
