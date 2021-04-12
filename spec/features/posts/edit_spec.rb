@@ -73,13 +73,14 @@ RSpec.describe 'Post Edit' do
     end
 
     it "I cannot edit a post without content"  do
-      click_button "New Post"
+      click_link "Edit"
 
+      fill_in 'post[content]', with: ''
       fill_in 'post[grass_tags]', with: 'new'
 
-      click_button "Create Post"
+      click_button "Update Post"
 
-      expect(current_path).to eq('/posts')
+      expect(current_path).to eq("/posts/#{@post_1.id}")
       expect(page).to have_content('1 error prohibited this post from being saved:')
       expect(page).to have_content("Content can't be blank")
     end
