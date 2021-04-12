@@ -17,7 +17,7 @@ RSpec.describe 'User Like Page' do
       @user_2 = User.create!(name: 'Cynthia Rothrock', email: 'b@b.com', password: 'a', password_confirmation: 'a')
       @user_3 = User.create!(name: 'Michelle Yeoh', email: 'c@c.com', password: 'a', password_confirmation: 'a')
       @user_4 = User.create!(name: 'Scott Adkins', email: 'd@d.com', password: 'a', password_confirmation: 'a')
-      FollowerFollowed.create!(follower_id: @user_1.id, followed_id: @user_2.id)
+      FollowerFollowed.create!(follower_id: @user_1.id, followed_id: @user_3.id)
       @post_1 = Post.create!(
         content: "This post",
         only_followers: false,
@@ -32,7 +32,7 @@ RSpec.describe 'User Like Page' do
       @post_3 = Post.create!(
         content: "The hidden post",
         grass_tags: "hidden",
-        only_followers: true,
+        only_followers: false,
         user_id: @user_2.id
       )
       @post_4 = Post.create!(
@@ -41,42 +41,29 @@ RSpec.describe 'User Like Page' do
         only_followers: true,
         user_id: @user_3.id
       )
+      UserLike.create!(user_id: @user_1.id, post_id: @post_3.id)
+      UserLike.create!(user_id: @user_1.id, post_id: @post_4.id)
     end
 
-    it "I can see that I have Grumbls if I have Grumbls" do
-      visit login_path
-
-      fill_in 'Email', with: @user_1.email
-      fill_in 'Password', with: @user_1.password
-
-      click_button "Log In"
-
-      visit user_dashboard_path
-
-      expect(page).to have_content("Welcome Jackie Chan!")
-      expect(page).to have_content("Grumbls by Grumblrs you follow:")
-      expect(page).to have_content(@post_1.content)
-      expect(page).to have_content(@post_2.content)
-      expect(page).to have_content(@post_2.grass_tags)
-      expect(page).to have_content(@post_3.content)
-      expect(page).to have_content(@post_3.grass_tags)
-      expect(page).to_not have_content(@post_4.content)
-      expect(page).to_not have_content(@post_4.grass_tags)
-    end
 
     it "I can see that I don't have any grumbls in my grumbl feed" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_4)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
-      visit user_dashboard_path
+      visit users_path
 
-      expect(page).to have_content("You've never grumbld, and either you aren't following anyone or they've never grumbld.")
+      click_link @user_1.name
+
+      expect(page).to have_content("Grumbls #{@user_1.name} Likes")
+
+      click_link "Grumbls #{@user_1.name} Likes"
+
+      expect(current_path).to eq("/user/liked/#{@user_1.id}")
       expect(page).to_not have_content(@post_1.content)
       expect(page).to_not have_content(@post_2.content)
-      expect(page).to_not have_content(@post_2.grass_tags)
-      expect(page).to_not have_content(@post_3.content)
-      expect(page).to_not have_content(@post_3.grass_tags)
-      expect(page).to_not have_content(@post_4.content)
-      expect(page).to_not have_content(@post_4.grass_tags)
+      expect(page).to have_content(@post_3.content)
+      expect(page).to have_content(@post_3.grass_tags)
+      expect(page).to have_content(@post_4.content)
+      expect(page).to have_content(@post_4.grass_tags)
     end
 
   end
