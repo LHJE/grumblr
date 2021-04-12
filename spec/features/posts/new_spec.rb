@@ -42,6 +42,20 @@ RSpec.describe 'Post New' do
       expect(page).to have_content("new")
     end
 
+    it "I can make an only_followers new post"  do
+      click_button "New Post"
+
+      fill_in 'post[content]', with: 'It is a #new post!'
+      fill_in 'post[grass_tags]', with: 'new'
+      check("Only followers", allow_label_click: true)
+
+      click_button "Create Post"
+
+      expect(current_path).to eq("/posts/#{Post.all[-1].id}")
+      expect(page).to have_content('It is a #new post!')
+      expect(page).to have_content("new")
+    end
+
     it "I cannot make a new post without content"  do
       click_button "New Post"
 
