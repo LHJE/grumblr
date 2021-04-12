@@ -12,7 +12,7 @@ RSpec.describe 'Post New' do
       click_button "New Post"
 
       expect(current_path).to eq(root_path)
-      expect(page).to have_content("You need to be logged in to post.")
+      expect(page).to have_content("You need to be logged in to grumbl.")
     end
   end
 

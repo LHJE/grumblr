@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     if current_user.nil?
-      flash[:notice] = 'You need to be logged in to post.'
+      flash[:notice] = 'You need to be logged in to grumbl.'
       redirect_to root_path
     else
       @post = Post.new
@@ -45,13 +45,11 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    require 'pry'; binding.pry
     if current_user.nil?
       flash[:notice] = 'You need to be logged in to edit a grumbl.'
       redirect_to root_path
-    else
-
-      flash[:notice] = 'You need to be the original grumblr edit a post.'
+    elsif current_user.id != @post.user_id
+      flash[:notice] = 'You need to be the original grumblr edit a grumbl.'
       redirect_to root_path
     end
   end
@@ -65,7 +63,7 @@ class PostsController < ApplicationController
             end
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to @post, notice: 'Grumbl was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -78,7 +76,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to @post, notice: 'Grumbl was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -91,7 +89,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_url, notice: 'Grumbl was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
