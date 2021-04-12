@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'posts#index'
   resources :posts
   resources :users
+  post '/users/:id/edit', to: 'users#edit'
 
   get '/registration', to: 'users#new', as: :registration
   get '/login', to: 'sessions#new'
