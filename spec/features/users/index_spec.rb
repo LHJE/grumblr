@@ -9,7 +9,7 @@ RSpec.describe 'User Index Page' do
       @user_4 = User.create!(name: 'Scott Adkins', email: 'd@d.com', password: 'a', password_confirmation: 'a')
     end
 
-    it "If not logged in, I can see another user's if they have Grumbls, but not the only_followers ones" do
+    it "I can see user" do
       visit "/users"
 
       expect(page).to have_content("Grumblrs")
@@ -23,17 +23,6 @@ RSpec.describe 'User Index Page' do
       expect(page).to have_content( 'c@c.com',)
       expect(page).to have_content('Scott Adkins')
       expect(page).to have_content('d@d.com')
-      expect(page).to have_content('Show')
-      expect(page).to_not have_content('Edit')
-      expect(page).to_not have_content('Destroy')
-    end
-
-    it "If logged in, I can see my Grumbls if I have Grumbls" do
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
-      visit "/users"
-      expect(page).to have_content('Edit')
-      expect(page).to have_content('Destroy')
-
     end
 
   end
