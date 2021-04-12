@@ -23,7 +23,7 @@
             <td><%= link_to 'Edit', edit_post_path(post) %></td>
             <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% else %>
-            <% if current_user && UserLike.where(user_id: current_user.id).pluck(:post_id).include?(post.id.to_s) %>
+            <% if current_user && @likes.where(user_id: current_user.id).pluck(:post_id).include?(post.id.to_s) %>
               <td><%= link_to 'Unlike', "/user_likes/#{post.id}/destroy" %></td>
             <% else %>
               <td><%= link_to 'Like', "/user_likes/#{post.id}/create" %></td>
