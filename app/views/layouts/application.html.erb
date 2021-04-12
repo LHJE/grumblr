@@ -12,7 +12,8 @@
 
   <body>
     <nav>
-      <%= link_to 'Home', root_path %>
+      <%= image_tag("logo.png", width: 50) %>
+      <%= link_to 'Grumblr Home', root_path %>
       <%= link_to 'Grumblrs', users_path  %>
       <%= link_to 'Register', registration_path unless current_user %>
       <%= link_to 'Log In', login_path unless current_user %>
