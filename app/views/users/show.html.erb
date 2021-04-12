@@ -10,9 +10,33 @@
   <%= @user.email %>
 </p>
 
+<p>
+  <h3>Followers:</h3>
+  <% if @followers == [] %>
+    <p><%= @user.name %> has no followers</p>
+  <% else %>
+    <% @followers.each do |follower| %>
+      <p><%= link_to follower.name, follower %></p>
+    <% end %>
+  <% end %>
+</p>
 
 <p>
-  <%= link_to "Grumbls #{@user.name} Likes", "/user/liked/#{@user.id}" %>
+  <h3>Following:</h3>
+  <% if @following == [] %>
+    <p><%= @user.name %> is not following anyone.</p>
+  <% else %>
+    <% @following.each do |grumblr| %>
+      <p><%= link_to grumblr.name, grumblr %></p>
+    <% end %>
+  <% end %>
+</p>
+<br>
+----------------
+<br>
+
+<p>
+  <%= link_to "Grumbls That #{@user.name} Likes", "/user/liked/#{@user.id}" %>
 </p>
 <% if current_user.nil? || current_user.id != @user.id %>
   <% if current_user && @user.id.to_s == FollowerFollowed.where(follower_id: current_user.id).pluck(:followed_id)[0] %>
