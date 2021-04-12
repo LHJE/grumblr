@@ -41,6 +41,7 @@ group :development, :test do
   gem 'travis'
   gem 'orderly'
   gem 'capybara'
+  gem 'faker'
 end
 
 group :development do
