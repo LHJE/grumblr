@@ -53,7 +53,7 @@ RSpec.describe 'User Like Page' do
 
       click_link @user_1.name
 
-      expect(page).to have_content("Grumbls #{@user_1.name} Likes")
+      expect(page).to have_content("Grumbls That #{@user_1.name} Likes")
 
       click_link "Grumbls #{@user_1.name} Likes"
 
