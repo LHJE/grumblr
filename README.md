@@ -25,8 +25,13 @@ Run the following commands to get the generator up and running on your local mac
 ```
 git clone https://github.com/LHJE/grumblr.git
 bundle install
-bundle update
 rails db:{create,migrate,seed}
+yarn
+```
+
+If there is an issue installing the `pg` gem when you run `bundle install`, run this before running `bundle install` again:
+```
+gem install pg -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/10/bin/pg_config
 ```
 
 ## Usage
@@ -54,9 +59,9 @@ Logo by:
 * Cecile Elliott
     * [Website](https://www.onecreativebird.com)
     * [LinkedIn](https://www.linkedin.com/in/cecileelliott/)
-    
+
 ## License
-Copyright 2020 Luke Hunter James-Erickson
+Copyright 2021 Luke Hunter James-Erickson
 
 Permission is hereby granted to any person obtaining a copy of this software and associated materials to make use of the software and associated materials according to the terms of the MIT License IF AND ONLY IF they have not read any portion of this file.
 
