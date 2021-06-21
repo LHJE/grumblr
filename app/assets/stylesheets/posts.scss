@@ -1,15 +1,19 @@
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-header {
+description {
   color: #B8860B;
   margin-right: 15px;
   max-width: 200px;
-  border-style: none solid none none;
+  padding: 10px;
 }
 
 posts {
   color: #B8860B;
   border-style: solid;
-  display: inline-block;
+  padding: 10px;
+}
+
+content {
+  display: flex;
 }
