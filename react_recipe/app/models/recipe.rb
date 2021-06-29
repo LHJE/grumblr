@@ -1,6 +1,5 @@
 class Recipe < ApplicationRecord
-  validates :name, presence: true, length: {maximum: 100}
+  validates :name, presence: true
   validates :ingredients, presence: true
-  validates :instructions, presence: true
-  validates :image_url, length: {maximum: 200}
+  validates :instruction, presence: true
 end

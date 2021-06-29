@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
+  
   namespace :api do
     namespace :v1 do
-      resources :recipes, except: [:new, :edit]
+      get 'recipes/index'
+      post 'recipes/create'
+      get '/show/:id', to: 'recipes#show'
+      delete '/destroy/:id', to: 'recipes#destroy'
     end
   end
 
-  root 'main#index'
+  root 'homepage#index'
+  get '/*path' => 'homepage#index'
 
-  get '/*path' => 'main#index'
 end

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import DefaultImage from 'images/default_image.jpg';
 
 class Recipes extends React.Component {
   constructor(props) {
@@ -11,35 +10,31 @@ class Recipes extends React.Component {
   }
 
   componentDidMount() {
-      const url = "/api/v1/recipes";
-      fetch(url)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Network response was not ok.");
-        })
-        .then(response => this.setState({ recipes: response }))
-        .catch(() => this.props.history.push("/"));
+    const url = "/api/v1/recipes/index";
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then(response => this.setState({ recipes: response }))
+      .catch(() => this.props.history.push("/"));
   }
-
   render() {
     const { recipes } = this.state;
     const allRecipes = recipes.map((recipe, index) => (
       <div key={index} className="col-md-6 col-lg-4">
         <div className="card mb-4">
           <img
-            src={recipe.image || DefaultImage}
+            src={recipe.image}
             className="card-img-top"
             alt={`${recipe.name} image`}
           />
           <div className="card-body">
             <h5 className="card-title">{recipe.name}</h5>
-            <Link to={`/recipes/${recipe.id}`} className="btn custom-button">
+            <Link to={`/recipe/${recipe.id}`} className="btn custom-button">
               View Recipe
-            </Link>
-            <Link to={`/recipes/${recipe.id}/edit`} className="btn custom-button ml-2">
-              Edit Recipe
             </Link>
           </div>
         </div>
@@ -48,7 +43,7 @@ class Recipes extends React.Component {
     const noRecipe = (
       <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
         <h4>
-          No recipes yet. Why not <Link to="/recipes/new">create one</Link>
+          No recipes yet. Why not <Link to="/new_recipe">create one</Link>
         </h4>
       </div>
     );
@@ -68,7 +63,7 @@ class Recipes extends React.Component {
         <div className="py-5">
           <main className="container">
             <div className="text-right mb-3">
-              <Link to="/recipes/new" className="btn custom-button">
+              <Link to="/recipe" className="btn custom-button">
                 Create New Recipe
               </Link>
             </div>
@@ -84,5 +79,4 @@ class Recipes extends React.Component {
     );
   }
 }
-
 export default Recipes;
