@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class Recipe extends React.Component {
+class Grumbl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { recipe: { ingredients: "" } };
+    this.state = { grumbl: { ingredients: "" } };
 
     this.addHtmlEntities = this.addHtmlEntities.bind(this);
-    this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.deleteGrumbl = this.deleteGrumbl.bind(this);
   }
 
   componentDidMount() {
@@ -26,8 +26,8 @@ class Recipe extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.setState({ recipe: response }))
-      .catch(() => this.props.history.push("/recipes"));
+      .then(response => this.setState({ grumbl: response }))
+      .catch(() => this.props.history.push("/grumbls"));
   }
 
   addHtmlEntities(str) {
@@ -36,7 +36,7 @@ class Recipe extends React.Component {
       .replace(/&gt;/g, ">");
   }
 
-  deleteRecipe() {
+  deleteGrumbl() {
     const {
       match: {
         params: { id }
@@ -58,16 +58,16 @@ class Recipe extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(() => this.props.history.push("/recipes"))
+      .then(() => this.props.history.push("/grumbls"))
       .catch(error => console.log(error.message));
   }
 
   render() {
-    const { recipe } = this.state;
+    const { grumbl } = this.state;
     let ingredientList = "No ingredients available";
 
-    if (recipe.ingredients.length > 0) {
-      ingredientList = recipe.ingredients
+    if (grumbl.ingredients.length > 0) {
+      ingredientList = grumbl.ingredients
         .split(",")
         .map((ingredient, index) => (
           <li key={index} className="list-group-item">
@@ -75,19 +75,19 @@ class Recipe extends React.Component {
           </li>
         ));
     }
-    const recipeInstruction = this.addHtmlEntities(recipe.instruction);
+    const grumblInstruction = this.addHtmlEntities(grumbl.instruction);
 
     return (
       <div className="">
         <div className="hero position-relative d-flex align-items-center justify-content-center">
           <img
-            src={recipe.image}
-            alt={`${recipe.name} image`}
+            src={grumbl.image}
+            alt={`${grumbl.name} image`}
             className="img-fluid position-absolute"
           />
           <div className="overlay bg-dark position-absolute" />
           <h1 className="display-4 position-relative text-white">
-            {recipe.name}
+            {grumbl.name}
           </h1>
         </div>
         <div className="container py-5">
@@ -102,18 +102,18 @@ class Recipe extends React.Component {
               <h5 className="mb-2">Preparation Instructions</h5>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: `${recipeInstruction}`
+                  __html: `${grumblInstruction}`
                 }}
               />
             </div>
             <div className="col-sm-12 col-lg-2">
-              <button type="button" className="btn btn-danger" onClick={this.deleteRecipe}>
-                Delete Recipe
+              <button type="button" className="btn btn-danger" onClick={this.deleteGrumbl}>
+                Delete Grumbl
               </button>
             </div>
           </div>
-          <Link to="/recipes" className="btn btn-link">
-            Back to recipes
+          <Link to="/grumbls" className="btn btn-link">
+            Back to grumbls
           </Link>
         </div>
       </div>
@@ -122,4 +122,4 @@ class Recipe extends React.Component {
 
 }
 
-export default Recipe;
+export default Grumbl;

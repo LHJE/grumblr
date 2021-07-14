@@ -16,11 +16,11 @@ ActiveRecord::Schema.define(version: 2021_06_29_210419) do
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
-  create_table "recipes", force: :cascade do |t|
+  create_table "grumbls", force: :cascade do |t|
     t.string "name", null: false
     t.text "ingredients", null: false
     t.text "instruction", null: false
-    t.string "image", default: "https://raw.githubusercontent.com/do-community/react_rails_recipe/master/app/assets/images/Sammy_Meal.jpg"
+    t.string "image", default: "https://cdn.mos.cms.futurecdn.net/hQdwFN8qZkxzZy846M5kTg.jpg"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

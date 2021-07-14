@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-class NewRecipe extends React.Component {
+class NewGrumbl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +27,7 @@ class NewRecipe extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const url = "/api/v1/recipes/create";
+    const url = "/api/v1/grumbls/create";
     const { name, ingredients, instruction } = this.state;
 
     if (name.length == 0 || ingredients.length == 0 || instruction.length == 0)
@@ -54,7 +54,7 @@ class NewRecipe extends React.Component {
         }
         throw new Error("Network response was not ok.");
       })
-      .then(response => this.props.history.push(`/recipe/${response.id}`))
+      .then(response => this.props.history.push(`/grumbl/${response.id}`))
       .catch(error => console.log(error.message));
   }
 
@@ -64,26 +64,26 @@ class NewRecipe extends React.Component {
         <div className="row">
           <div className="col-sm-12 col-lg-6 offset-lg-3">
             <h1 className="font-weight-normal mb-5">
-              Add a new recipe to our awesome recipe collection.
+              Add a new grumbl to our awesome grumbl collection.
             </h1>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
-                <label htmlFor="recipeName">Recipe name</label>
+                <label htmlFor="grumblName">Grumbl name</label>
                 <input
                   type="text"
                   name="name"
-                  id="recipeName"
+                  id="grumblName"
                   className="form-control"
                   required
                   onChange={this.onChange}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="recipeIngredients">Ingredients</label>
+                <label htmlFor="grumblIngredients">Ingredients</label>
                 <input
                   type="text"
                   name="ingredients"
-                  id="recipeIngredients"
+                  id="grumblIngredients"
                   className="form-control"
                   required
                   onChange={this.onChange}
@@ -102,10 +102,10 @@ class NewRecipe extends React.Component {
                 onChange={this.onChange}
               />
               <button type="submit" className="btn custom-button mt-3">
-                Create Recipe
+                Create Grumbl
               </button>
-              <Link to="/recipes" className="btn btn-link mt-3">
-                Back to recipes
+              <Link to="/grumbls" className="btn btn-link mt-3">
+                Back to grumbls
               </Link>
             </form>
           </div>
@@ -116,4 +116,4 @@ class NewRecipe extends React.Component {
 
 }
 
-export default NewRecipe;
+export default NewGrumbl;
