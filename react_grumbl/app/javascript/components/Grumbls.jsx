@@ -52,11 +52,10 @@ class Grumbls extends React.Component {
       <>
         <section className="jumbotron jumbotron-fluid text-center">
           <div className="container py-5">
-            <h1 className="display-4">Grumbls for every occasion</h1>
+            <h1 className="display-4">Here are the Grumbls</h1>
             <p className="lead text-muted">
               We’ve pulled together our most popular grumbls, our latest
-              additions, and our editor’s picks, so there’s sure to be something
-              tempting for you to try.
+              additions, and our editor’s picks.
             </p>
           </div>
         </section>
