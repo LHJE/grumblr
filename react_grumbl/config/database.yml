@@ -83,4 +83,4 @@ production:
   <<: *default
   database: react_grumbl_production
   username: react_grumbl
-  password: <%= ENV['REACT_RECIPE_DATABASE_PASSWORD'] %>
+  password: <%= ENV['REACT_GRUMBL_DATABASE_PASSWORD'] %>
