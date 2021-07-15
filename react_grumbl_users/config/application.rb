@@ -19,11 +19,6 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# config.middleware.use ActionDispatch::Cookies
-# config.middleware.use ActionDispatch::Session::CookieStore
-#
-# config.api_only = false
-
 module RailsReactGrumbl
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

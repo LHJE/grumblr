@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_181857) do
+ActiveRecord::Schema.define(version: 2021_06_29_210419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -21,14 +21,6 @@ ActiveRecord::Schema.define(version: 2021_07_14_181857) do
     t.text "ingredients", null: false
     t.text "instruction", null: false
     t.string "image", default: "https://cdn.mos.cms.futurecdn.net/hQdwFN8qZkxzZy846M5kTg.jpg"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "email"
-    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

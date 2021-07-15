@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: react_grumbl_users_development
+  database: react_grumbl_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: react_grumbl_users_test
+  database: react_grumbl_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: react_grumbl_users_production
-  username: react_grumbl_users
-  password: <%= ENV['REACT_GRUMBL_USERS_DATABASE_PASSWORD'] %>
+  database: react_grumbl_production
+  username: react_grumbl
+  password: <%= ENV['REACT_GRUMBL_DATABASE_PASSWORD'] %>
